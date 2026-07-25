@@ -1,0 +1,63 @@
+Config file contains settings for different stages of data analysis and clustering. You can set up parameters for matplotlib grid, image quality, number of clusters, random states for different algorithms, save paths, etc. There are 8 parameter categories in this .json file:
+
+· DataPreprocessingParameters:
+   — path_to_dataset: Contains path to the original dataset that should be analyzed.
+   — missing_information_max_percent: Contains the threshold that defines the maximum percentage of missing information allowed. Columns in which the percentage of empty cells exceeds this threshold will be removed (I refer to such columns as "sparse columns").
+· GraphPlotterGridParameters:
+   — n_columns: Contains the number of columns that will be displayed on a matplotlib graph. This parameter is crucial for matplotlib subplot function. Each saved plot contains n_columns*n_rows graphs.
+   — n_rows: Contains the number of rows that will be displayed on a matplotlib graph. This parameter is crucial for matplotlib subplot function. Each saved plot contains n_columns*n_rows graphs.
+   — dpi: Contains dpi number to save images with a certain quality.
+   — max_feature_number_to_plot: Contains the maximum feature (response) number that will be displayed on graphs.
+· GraphPlotterSavePaths:
+   — path_to_original_graphs: Here, graphs with original dataset information are saved. Graphs shows response distribution per each question.
+   — path_to_processed_graphs: Here, graphs with prepared for encoding dataset information (missed values are filled, text features extracted, and sparse columns are removed) are saved. Graphs shows response distribution per each retained question.
+   — path_to_cluster_choice_graphs: Here, graphs with different metrics for choosing the number of clusters are saved. Contains folders from the following parameters: path_to_k_elbow, path_to_silhouette_score, path_to_dendrogram, path_to_bic_aic.
+   — path_to_k_elbow: Here, the results of the K-Elbow algorithm's work are saved.
+   — path_to_silhouette_score: Here, the results of the Silhouette score algorithm's work are saved.
+   — path_to_dendrogram: Here, the the dendrograms are saved.
+   — path_to_bic_aic: Here, graphs for the Bayesian Information Criterion (BIC) and Akaike Information Criterion (AIC) are saved.
+   — path_to_reduced_components_visualization: Here, the results of various dimensionality reduction methods are saved. The results are presented in both 2D and 3D space.
+   — path_to_cluster_results: Here, the results of diverse clustering methods are saved.
+   — path_to_interpretations: Here, the results of the interpretation of the obtained clusters are saved. There are graphs showing the participants' responses for each top feature across the different clusters.
+· AdditionalParamters:
+   — with_text_columns: This parameter is responsible for including columns with textual information in encoding and clustering process. If this parameter is set to 0 these columns won't be included. Otherwise, they will be encoded as others and will affect clustering results (I recommend setting 1 to avoid confusion).
+   — interpret_tsne_reduced_data: This parameter determines whether the interpretation of clustering results for data reduced using the t-SNE algorithm is performed. If set to 0, no interpretation will be performed. If set to a non-zero value, the interpretation will be saved (I recommend setting 1 to avoid confusion).
+   — interpret_pca_reduced_data: This parameter determines whether the interpretation of clustering results for data reduced using the PCA algorithm is performed. If set to 0, no interpretation will be performed. If set to a non-zero value, the interpretation will be saved (I recommend setting 1 to avoid confusion).
+   — interpret_kernel_pca_reduced_data: This parameter determines whether the interpretation of clustering results for data reduced using the Kernel PCA algorithm is performed. If set to 0, no interpretation will be performed. If set to a non-zero value, the interpretation will be saved (I recommend setting 1 to avoid confusion).
+   — interpret_mds_reduced_data: This parameter determines whether the interpretation of clustering results for data reduced using the MDS algorithm is performed. If set to 0, no interpretation will be performed. If set to a non-zero value, the interpretation will be saved (I recommend setting 1 to avoid confusion).
+· DimensionalityReducerParameters:
+   — save_info_ratio: Contains the ratio for the Linear PCA method. You can specify either a fractional number representing the percentage of information retained or an integer indicating the number of features to keep.
+   — pca_random_state: Contains the random state parameter for PCA algorithm. Serves to ensure reproducibility of results.
+   — kpca_kernel: Contains the name of kernel function for Kernel PCA algorithm.
+   — kernel_pca_random_state: Contains the random state parameter for Kernel PCA algorithm. Serves to ensure reproducibility of results.
+   — tsne_perplexity: Contains the perplexity parameter for t-SNE algorithms ("t-SNE: The effect of various perplexity values on the shape", n.d.).
+   — tsne_random_state: Contains the random state parameter for t-SNE algorithm. Serves to ensure reproducibility of results.
+   — mds_random_state: Contains the random state parameter for MDS algorithm. Serves to ensure reproducibility of results.
+   — tsne_slice_range: The range of values for a specific component used to filter the data displayed in the 3D scatter plot for t-SNE visualization. Required to view data in a cross-section.
+   — linear_pca_slice_range: The range of values for a specific component used to filter the data displayed in the 3D scatter plot for (Linear) PCA visualization. Required to view data in a cross-section.
+   — kernel_pca_slice_range: The range of values for a specific component used to filter the data displayed in the 3D scatter plot for Kernel PCA visualization. Required to view data in a cross-section.
+   — mds_slice_range: The range of values for a specific component used to filter the data displayed in the 3D scatter plot for MDS visualization. Required to view data in a cross-section.
+· ClusteringParameters:
+   — cluster_number: Contains the number of cluster into which the data should be divided.
+   — kmeans_init: Contains the method of initialization for K-Means algorithm.
+   — kmeans_random_state: Contains the random state parameter for K-Means clustering algorithm. Serves to ensure reproducibility of results.
+   — gauss_random_state: Contains the random state parameter for Gaussian Mixture clustering algorithm. Serves to ensure reproducibility of results.
+· ResultInterpreterParameters:
+   — random_forest_with_permutations: This parameter controls the application of the permutation feature importance algorithm during Random Forest clustering. If this parameter is set to 0, the algorithm won't be applied; otherwise, it will be.
+   — random_forest_permutation_repeats: Contains the number of repeats for permutation feature importance algorithm.
+   — permutation_random_state: Contains the random state parameter for permutation feature importance algorithm. Serves to ensure reproducibility of results.
+   — mutual_information_random_state: Contains the random state parameter for mutual information algorithm. Serves to ensure reproducibility of results.
+   — most_important_features_max_number: Specifies the maximum number of most important features to display.
+· ResultInterpreterSavePaths:
+   — path_to_pca_2d_gauss_result: Here, the output of the Gaussian Mixture clustering, performed on data after 2D reduction using Linear PCA, is saved.
+   — path_to_kernel_pca_2d_gauss_result: Here, the output of the Gaussian Mixture clustering, performed on data after 2D reduction using Kernel PCA, is saved.
+   — path_to_tsne_2d_gauss_result: Here, the output of the Gaussian Mixture clustering, performed on data after 2D reduction using t-SNE, is saved.
+   — path_to_mds_2d_gauss_result: Here, the output of the Gaussian Mixture clustering, performed on data after 2D reduction using MDS, is saved.
+   — path_to_pca_2d_kmeans_result: Here, the output of the K-Means clustering, performed on data after 2D reduction using Linear PCA, is saved.
+   — path_to_kernel_pca_2d_kmeans_result: Here, the output of the K-Means clustering, performed on data after 2D reduction using Kernel PCA, is saved.
+   — path_to_tsne_2d_kmeans_result: Here, the output of the K-Means clustering, performed on data after 2D reduction using t-SNE, is saved.
+   — path_to_mds_2d_kmeans_result: Here, the output of the K-Means clustering, performed on data after 2D reduction using MDS, is saved.
+   — path_to_pca_2d_agglomerative_result: Here, the output of the Agglomerative hierarchical clustering, performed on data after 2D reduction using Linear PCA, is saved.
+   — path_to_kernel_pca_2d_agglomerative_result: Here, the output of the Agglomerative hierarchical clustering, performed on data after 2D reduction using Kernel PCA, is saved.
+   — path_to_tsne_2d_agglomerative_result: Here, the output of the Agglomerative hierarchical clustering, performed on data after 2D reduction using t-SNE, is saved.
+   — path_to_mds_2d_agglomerative_result: Here, the output of the Agglomerative hierarchical clustering, performed on data after 2D reduction using MDS, is saved.
